@@ -68,10 +68,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   geometry_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   geometry_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES r2_robot
-#  CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf
+CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf
 #  DEPENDS system_lib
 )
 
