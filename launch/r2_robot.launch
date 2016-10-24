@@ -1,14 +1,24 @@
 <launch>
 	<arg name="model" />
 	<arg name="gui" default="False" />
+	<arg name="period" default="5" />
+	<arg name="marker_frequency" default="20" />
+	<arg name="rviz" default="True" />
+
 	<param name="robot_description" textfile="$(arg model)" />
 	<param name="use_gui" value="$(arg gui)"/>
 	<param name="source_list" value="robot_control_node"/>
+	<param name="period" value="$(arg period)"/>
+	<param name="marker_frequency" value="$(arg marker_frequency)" />
+
 	<node name="robot_control_node" pkg="r2_robot" type="robot_control_node.py" />
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <rosparam param="source_list">[control_joint_states]</rosparam>
 	</node>
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find r2_robot)/urdf.rviz" required="true" />
 	<node name="publish_marker" pkg="r2_robot" type="publish_marker.py" />
+	<group if="$(arg rviz)">
+		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find r2_robot)/urdf.rviz" required="true" />
+	</group>
+
 </launch>

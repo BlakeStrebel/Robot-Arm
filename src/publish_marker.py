@@ -13,9 +13,12 @@ if __name__ == '__main__':
     listener = tf.TransformListener()
     marker_pub = rospy.Publisher('visualization_marker',Marker,queue_size=1)
 
+    frequency = rospy.get_param('marker_frequency')
+    period = rospy.get_param('period')
+
     i = 0
 
-    rate = rospy.Rate(20)
+    rate = rospy.Rate(frequency)
     while not rospy.is_shutdown():
         try:
             (trans,rot) = listener.lookupTransform('base_link', 'end', rospy.Time(0))
@@ -42,8 +45,7 @@ if __name__ == '__main__':
         marker.color.g = 1.0
         marker.color.b = 0.0
         marker.color.a = 1.0
-
-        marker.lifetime = rospy.Duration(1)
+        marker.lifetime = rospy.Duration(period/2.0)
         marker_pub.publish(marker)
 
         i = i + 1
