@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   joint_state_publisher
   robot_state_publisher
+  visualization_msgs
   rospy
   rviz
   urdf
@@ -106,7 +107,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES r2_robot
-CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf sensor_msgs
+CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf sensor_msgs visualization_msgs
 #  DEPENDS system_lib
 )
 
