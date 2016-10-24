@@ -21,8 +21,10 @@ def control():
 
 if __name__ == '__main__':
     rospy.init_node('robot_control_node')
+    check = rospy.get_param('use_gui',default =False)
     try:
-        control()
+        if check == False:
+            control()
     except rospy.ROSInterruptException:
         pass
 
