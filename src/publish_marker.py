@@ -4,7 +4,6 @@ roslib.load_manifest('r2_robot')
 import rospy
 import math
 import tf
-import geometry_msgs.msg
 from visualization_msgs.msg import Marker
 
 if __name__ == '__main__':
@@ -21,10 +20,12 @@ if __name__ == '__main__':
     rate = rospy.Rate(frequency)
     while not rospy.is_shutdown():
         try:
+            # get transformation from base frame to end affector frame
             (trans,rot) = listener.lookupTransform('base_link', 'end', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             continue
 
+        # publish visualization marker
         marker = Marker()
         marker.header.frame_id = "base_link"
         marker.header.stamp = rospy.Time.now()
@@ -48,6 +49,6 @@ if __name__ == '__main__':
         marker.lifetime = rospy.Duration(period/2.0)
         marker_pub.publish(marker)
 
-        i = i + 1
+        i = i + 1   # increment marker id
 
         rate.sleep()

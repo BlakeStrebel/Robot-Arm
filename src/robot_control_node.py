@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 import rospy
 from math import cos, sin, pi, atan2, acos, sqrt
-
 from sensor_msgs.msg import JointState
 
 def control():
     pub = rospy.Publisher('control_joint_states',JointState,queue_size=10)
-
-    rate = rospy.Rate(50)
+    p = rospy.get_param('period')   # get period of trajectory from parameter server
     joint_state = JointState()
 
-    p = rospy.get_param('period')
-
+    rate = rospy.Rate(50)
     while not rospy.is_shutdown():
         t = rospy.Time.now().to_sec()
 
+        # calculate inverse kinematics of the robot
         x = .5*cos(2*pi*t/p)+1.25
         y = .5*sin(2*pi*t/p)
         x2 = x ** 2
@@ -22,6 +20,7 @@ def control():
         theta1 = atan2(y,x) - acos((x2+y2)/(2*sqrt(x2+y2)))
         theta2 = pi - acos((2-x2-y2)/2)
 
+        # publish joint state data
         joint_state.header.stamp = rospy.Time.now()
         joint_state.name = ["base_to_link1","link1_to_link2"]
         joint_state.position = [theta1, theta2]
@@ -31,7 +30,7 @@ def control():
 
 if __name__ == '__main__':
     rospy.init_node('robot_control_node')
-    check = rospy.get_param('use_gui',default =False)
+    check = rospy.get_param('use_gui',default =False)   # check if node should publish data
     try:
         if check == False:
             control()
