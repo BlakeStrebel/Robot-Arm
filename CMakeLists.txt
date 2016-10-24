@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   rviz
   urdf
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES r2_robot
-CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf
+CATKIN_DEPENDS geometry_msgs joint_state_publisher robot_state_publisher rospy rviz urdf sensor_msgs
 #  DEPENDS system_lib
 )
 
