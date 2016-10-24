@@ -51,6 +51,9 @@
 
 <link name="end">
   <visual>
+    <geometry>
+      <box size="0 0 0"/>
+    </geometry>
     <origin rpy="0 0 0" xyz=".5 0 0"/>
   </visual>
 </link>
