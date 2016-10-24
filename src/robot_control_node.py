@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from math import cos, sin, pi
+from math import cos, sin, pi, atan2, acos, sqrt
 
 from sensor_msgs.msg import JointState
 
@@ -12,9 +12,16 @@ def control():
     while not rospy.is_shutdown():
         t = rospy.Time.now().to_sec()
 
+        x = .5*cos(2*pi*t/5.0)+1.25
+        y = .5*sin(2*pi*t/5.0)
+        x2 = x ** 2
+        y2 = y ** 2
+        theta1 = atan2(y,x) - acos((x2+y2)/(2*sqrt(x2+y2)))
+        theta2 = pi - acos((2-x2-y2)/2)
+
         joint_state.header.stamp = rospy.Time.now()
         joint_state.name = ["base_to_link1","link1_to_link2"]
-        joint_state.position = [1, 1]
+        joint_state.position = [theta1, theta2]
         pub.publish(joint_state)
 
         rate.sleep()
